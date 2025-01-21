@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { api } from "../../services/api";
 import { BsCartPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../contexts/CartContext";
 
 export interface ProductProps {
   id: number;
@@ -13,6 +14,7 @@ export interface ProductProps {
 
 export function Home() {
   const [products, setProducts] = useState<ProductProps[]>([]);
+  const {addItemCart} = useContext(CartContext)
 
   useEffect(() => {
     async function getProducts() {
@@ -21,6 +23,10 @@ export function Home() {
     }
     getProducts();
   }, []);
+
+  function handleAddCartItem(produto: ProductProps){
+    addItemCart(produto)
+  }
 
   return (
     <main className="w-full max-w-7xl px-4 mx-auto py-4">
@@ -51,7 +57,10 @@ export function Home() {
                   currency: "BRL",
                 })}
               </strong>
-              <button className="bg-zinc-900 p-1 rounded hover:opacity-70 transition-all ease-in-out duration-500">
+              <button 
+              className="bg-zinc-900 p-1 rounded hover:opacity-70 transition-all ease-in-out duration-500"
+              onClick={()=>handleAddCartItem(produto)}
+              >
                 <BsCartPlus size={20} color="#fff" />
               </button>
             </div>
