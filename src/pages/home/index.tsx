@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
 import { BsCartPlus } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
-interface ProductProps {
+export interface ProductProps {
   id: number;
   title: string;
   description: string;
@@ -29,14 +30,17 @@ export function Home() {
       <div className="grid grid-col-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
         {products.map((produto) => (
           <section className="w-full" key={produto.id}>
-            <img
-              src={produto.cover}
-              alt={produto.title}
-              className="w-full  mb-2 hover:scale-110 transition-all ease-out duration-500"
-            />
-            <p className="font-medium font-RobotoCondensed text-base mt-4">
-              {produto.title}
-            </p>
+            <Link to={`/products/${produto.id}`}>
+              <img
+                src={produto.cover}
+                alt={produto.title}
+                className="w-full  mb-2 hover:scale-110 transition-all ease-out duration-500"
+              />
+              <p className="font-medium font-RobotoCondensed text-base mt-4">
+                {produto.title}
+              </p>
+            </Link>
+
             <div className="flex gap-3 items-center">
               <strong>
                 {produto.price.toLocaleString("pt-BR", {
