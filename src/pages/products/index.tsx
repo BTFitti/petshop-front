@@ -21,7 +21,7 @@ export function Products() {
           <img
             src={product?.cover}
             alt={product?.title}
-            className="rounded-lg flex-1 w-full lg:w-0 lg:mb-0 mb-3 object-cover mr-6"
+            className="rounded-lg flex-1 w-full lg:w-0 lg:mb-0 mb-3 object-fill mr-6"
           />
           <div className="flex-1">
             <p className="font-bold text-2xl font-RobotoCondensed mb-6">

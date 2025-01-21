@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { api } from "../../services/api";
 import { BsCartPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -29,14 +29,17 @@ export function Home() {
       </h1>
       <div className="grid grid-col-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
         {products.map((produto) => (
-          <section className="w-full" key={produto.id}>
+          <section
+            className="w-full bg-orange-400/25 rounded-lg p-5 hover:scale-105 transition-all ease-out duration-500 shadow-xl"
+            key={produto.id}
+          >
             <Link to={`/products/${produto.id}`}>
               <img
                 src={produto.cover}
                 alt={produto.title}
-                className="w-full  mb-2 hover:scale-110 transition-all ease-out duration-500"
+                className="w-full mb-2 rounded-3xl "
               />
-              <p className="font-medium font-RobotoCondensed text-base mt-4">
+              <p className="font-medium font-RobotoCondensed text-base mt-4 mb-4">
                 {produto.title}
               </p>
             </Link>
