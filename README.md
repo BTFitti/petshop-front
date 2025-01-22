@@ -10,3 +10,5 @@
 
 https://github.com/user-attachments/assets/53d3ef21-60c8-48ed-a164-ffff09156b00
 
+# 💡 ContextAPI
+With the use of ContextAPI we can share specific information like properties, functions, without needing to export and import for every page you are going to use it, you just make use of the Context you created and have access to all of that data.
