@@ -3,6 +3,7 @@ import { api } from "../../services/api";
 import { BsCartPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../contexts/CartContext";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface ProductProps {
   id: number;
@@ -14,7 +15,8 @@ export interface ProductProps {
 
 export function Home() {
   const [products, setProducts] = useState<ProductProps[]>([]);
-  const {addItemCart} = useContext(CartContext)
+  const { addItemCart } = useContext(CartContext);
+  const notify = () => toast.success("Produto adicionado ao carrinho");
 
   useEffect(() => {
     async function getProducts() {
@@ -24,12 +26,33 @@ export function Home() {
     getProducts();
   }, []);
 
-  function handleAddCartItem(produto: ProductProps){
-    addItemCart(produto)
+  function handleAddCartItem(produto: ProductProps) {
+    addItemCart(produto);
+    notify();
   }
 
   return (
     <main className="w-full max-w-7xl px-4 mx-auto py-4">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          success: {
+            style: {
+              boxShadow: "0px 0px 10px 0px green",
+              padding: "16px",
+              color: "#121212",
+              
+            },
+          },
+        }}
+        containerStyle={{
+          top: 15,
+          left: 15,
+          bottom: 15,
+          right: 15,
+        }}
+      />
       <h1 className="font-bold font-RobotoCondensed text-5xl text-center mt-10 mb-10">
         Produtos em alta 🐾
       </h1>
@@ -57,9 +80,9 @@ export function Home() {
                   currency: "BRL",
                 })}
               </strong>
-              <button 
-              className="bg-zinc-900 p-1 rounded hover:opacity-70 transition-all ease-in-out duration-500"
-              onClick={()=>handleAddCartItem(produto)}
+              <button
+                className="bg-zinc-900 p-1 rounded hover:opacity-70 transition-all ease-in-out duration-500"
+                onClick={() => handleAddCartItem(produto)}
               >
                 <BsCartPlus size={20} color="#fff" />
               </button>

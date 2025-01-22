@@ -86,7 +86,7 @@ export function Cart() {
                 boxShadow: "0px 0px 10px 0px green",
                 padding: "16px",
                 color: "#121212",
-                fontWeight: "bold"
+                
               },
             },
           }}

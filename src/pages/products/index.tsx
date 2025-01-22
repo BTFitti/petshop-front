@@ -4,10 +4,13 @@ import { BsCartPlus } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { api } from "../../services/api";
 import { ProductProps } from "../home";
+import toast, { Toaster } from "react-hot-toast";
 export function Products() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductProps>();
-  const {addItemCart} = useContext(CartContext)
+  const { addItemCart } = useContext(CartContext);
+
+  const notify = () => toast.success("Produto adicionado ao carrinho");
 
   useEffect(() => {
     async function getProduct() {
@@ -16,8 +19,32 @@ export function Products() {
     }
     getProduct();
   }, [id]);
+  function handleAddItem(produto: ProductProps) {
+    addItemCart(produto);
+    notify();
+    return;
+  }
   return (
     <div className="w-full max-w-7xl px-4 mx-auto my-16">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          success: {
+            style: {
+              boxShadow: "0px 0px 10px 0px green",
+              padding: "16px",
+              color: "#121212",
+            },
+          },
+        }}
+        containerStyle={{
+          top: 15,
+          left: 15,
+          bottom: 15,
+          right: 15,
+        }}
+      />
       <section className="w-full">
         <div className="flex flex-col lg:flex-row">
           <img
@@ -39,9 +66,9 @@ export function Products() {
                   currency: "BRL",
                 })}
               </strong>
-              <button 
-              className="bg-zinc-900 p-2 rounded text-white hover:opacity-70 transition-all ease-in-out duration-500"
-              onClick={()=> addItemCart(product)}
+              <button
+                className="bg-zinc-900 p-2 rounded text-white hover:opacity-70 transition-all ease-in-out duration-500"
+                onClick={() => handleAddItem(product)}
               >
                 <BsCartPlus size={30} />
               </button>
