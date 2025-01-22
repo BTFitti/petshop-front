@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 import { BsCartPlus } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { api } from "../../services/api";
@@ -6,6 +7,7 @@ import { ProductProps } from "../home";
 export function Products() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductProps>();
+  const {addItemCart} = useContext(CartContext)
 
   useEffect(() => {
     async function getProduct() {
@@ -37,7 +39,10 @@ export function Products() {
                   currency: "BRL",
                 })}
               </strong>
-              <button className="bg-zinc-900 p-2 rounded text-white">
+              <button 
+              className="bg-zinc-900 p-2 rounded text-white hover:opacity-70 transition-all ease-in-out duration-500"
+              onClick={()=> addItemCart(product)}
+              >
                 <BsCartPlus size={30} />
               </button>
             </div>
