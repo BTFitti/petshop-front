@@ -1,11 +1,13 @@
 import { createContext, ReactNode, useState } from "react";
 import { ProductProps } from "../pages/home";
+import toast from 'react-hot-toast'
 interface CartContextData {
     cart: CartProps[];
     cartAmount: number;
     addItemCart: (newItem: ProductProps) => void;
     removeItemCart: (product: CartProps) => void;
     total: string;
+    clearCart: ()=> void;
 }
 interface CartProviderProps {
   children: ReactNode;
@@ -26,6 +28,8 @@ function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<CartProps[]>([]);
 
   const [total, setTotal] = useState("");
+
+  const notify = () => toast.success("Compra efetuada com sucesso!")
 
   function addItemCart(newItem: ProductProps){
 
@@ -71,7 +75,13 @@ function CartProvider({ children }: CartProviderProps) {
     const resultFormated = result.toLocaleString("pt-BR",{style: "currency",currency: "BRL"})
     setTotal(resultFormated)
   }
+  function clearCart(){
+    if(cart.length > 0){
+      setCart([])
+      notify()
+    }
+  }
 
-  return <CartContext.Provider value={{cart, cartAmount: cart.length, addItemCart, removeItemCart, total}}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{cart, cartAmount: cart.length, addItemCart, removeItemCart, total, clearCart}}>{children}</CartContext.Provider>;
 }
 export default CartProvider;
